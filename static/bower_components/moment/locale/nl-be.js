@@ -1,7 +1,5 @@
 //! moment.js locale configuration
 //! locale : Dutch (Belgium) [nl-be]
-//! author : Joris Röling : https://github.com/jorisroling
-//! author : Jacob Middag : https://github.com/middagj
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

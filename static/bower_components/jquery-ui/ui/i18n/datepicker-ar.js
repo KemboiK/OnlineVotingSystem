@@ -1,6 +1,4 @@
-/* Arabic Translation for jQuery UI date picker plugin. */
-/* Used in most of Arab countries, primarily in Bahrain, Kuwait, Oman, Qatar, Saudi Arabia and the United Arab Emirates, Egypt, Sudan and Yemen. */
-/* Written by Mohammed Alshehri -- m@dralshehri.com */
+
 
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {

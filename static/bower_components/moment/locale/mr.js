@@ -1,7 +1,5 @@
 //! moment.js locale configuration
 //! locale : Marathi [mr]
-//! author : Harshad Kale : https://github.com/kalehv
-//! author : Vivek Athalye : https://github.com/vnathalye
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

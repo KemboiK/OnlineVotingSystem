@@ -1,5 +1,4 @@
-/* Serbian i18n for the jQuery UI date picker plugin. */
-/* Written by Dejan Dimić. */
+
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
 

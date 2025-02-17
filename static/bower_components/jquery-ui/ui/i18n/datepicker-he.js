@@ -1,5 +1,4 @@
-/* Hebrew initialisation for the UI Datepicker extension. */
-/* Written by Amir Hardon (ahardon at gmail dot com). */
+
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
 

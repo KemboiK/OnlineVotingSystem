@@ -1,5 +1,4 @@
-/* Dutch (Belgium) initialisation for the jQuery UI date picker plugin. */
-/* David De Sloovere @DavidDeSloovere */
+
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
 

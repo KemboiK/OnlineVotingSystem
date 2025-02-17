@@ -1,6 +1,5 @@
 //! moment.js locale configuration
 //! locale : French [fr]
-//! author : John Fischer : https://github.com/jfroffice
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

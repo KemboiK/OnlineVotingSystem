@@ -1,6 +1,5 @@
 //! moment.js locale configuration
 //! locale : Tibetan [bo]
-//! author : Thupten N. Chakrishar : https://github.com/vajradog
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

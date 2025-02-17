@@ -1,6 +1,5 @@
 //! moment.js locale configuration
 //! locale : Icelandic [is]
-//! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

@@ -1,6 +1,5 @@
 //! moment.js locale configuration
 //! locale : Galician [gl]
-//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

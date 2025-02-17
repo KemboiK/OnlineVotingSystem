@@ -5,11 +5,7 @@
  * Includes Sizzle.js
  * https://sizzlejs.com/
  *
- * Copyright JS Foundation and other contributors
- * Released under the MIT license
- * https://jquery.org/license
- *
- * Date: 2017-03-20T19:00Z
+
  */
 ( function( global, factory ) {
 

@@ -1,6 +1,5 @@
 //! moment.js locale configuration
 //! locale : Sindhi [sd]
-//! author : Narain Sagar : https://github.com/narainsagar
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

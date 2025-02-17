@@ -1,6 +1,5 @@
 //! moment.js locale configuration
 //! locale : Lao [lo]
-//! author : Ryan Hart : https://github.com/ryanhart2
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

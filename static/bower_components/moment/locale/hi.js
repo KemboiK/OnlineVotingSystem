@@ -1,6 +1,5 @@
 //! moment.js locale configuration
 //! locale : Hindi [hi]
-//! author : Mayank Singhal : https://github.com/mayanksinghal
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

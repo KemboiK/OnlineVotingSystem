@@ -1,5 +1,4 @@
-/* Bulgarian initialisation for the jQuery UI date picker plugin. */
-/* Written by Stoyan Kyosev (http://svest.org). */
+
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
 

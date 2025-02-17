@@ -1,6 +1,5 @@
 //! moment.js locale configuration
 //! locale : Spanish [es]
-//! author : Julio Napurí : https://github.com/julionc
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

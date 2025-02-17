@@ -1,5 +1,4 @@
-/* Macedonian i18n for the jQuery UI date picker plugin. */
-/* Written by Stojce Slavkovski. */
+
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
 

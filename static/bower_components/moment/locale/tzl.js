@@ -1,7 +1,5 @@
 //! moment.js locale configuration
 //! locale : Talossan [tzl]
-//! author : Robin van der Vliet : https://github.com/robin0van0der0v
-//! author : Iustì Canun
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

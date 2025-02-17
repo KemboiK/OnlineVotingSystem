@@ -1,6 +1,5 @@
 //! moment.js locale configuration
 //! locale : English (Australia) [en-au]
-//! author : Jared Morse : https://github.com/jarcoal
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

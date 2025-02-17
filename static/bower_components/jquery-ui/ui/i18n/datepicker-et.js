@@ -1,5 +1,4 @@
-/* Estonian initialisation for the jQuery UI date picker plugin. */
-/* Written by Mart Sõmermaa (mrts.pydev at gmail com). */
+
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
 

@@ -1,6 +1,5 @@
 //! moment.js locale configuration
 //! locale : English (Canada) [en-ca]
-//! author : Jonathan Abourbih : https://github.com/jonbca
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

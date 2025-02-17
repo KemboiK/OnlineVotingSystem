@@ -1,4 +1,4 @@
-/* Karrikas-ek itzulia (karrikas@karrikas.com) */
+
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
 

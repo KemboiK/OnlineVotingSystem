@@ -1,5 +1,4 @@
-/* Tajiki (UTF-8) initialisation for the jQuery UI date picker plugin. */
-/* Written by Abdurahmon Saidov (saidovab@gmail.com). */
+
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
 

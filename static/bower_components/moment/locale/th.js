@@ -1,6 +1,5 @@
 //! moment.js locale configuration
 //! locale : Thai [th]
-//! author : Kridsada Thanabulpong : https://github.com/sirn
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

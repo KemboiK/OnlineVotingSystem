@@ -1,6 +1,5 @@
 //! moment.js locale configuration
 //! locale : Frisian [fy]
-//! author : Robin van der Vliet : https://github.com/robin0van0der0v
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

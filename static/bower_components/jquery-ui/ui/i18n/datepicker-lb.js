@@ -1,5 +1,4 @@
-/* Luxembourgish initialisation for the jQuery UI date picker plugin. */
-/* Written by Michel Weimerskirch <michel@weimerskirch.net> */
+
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
 

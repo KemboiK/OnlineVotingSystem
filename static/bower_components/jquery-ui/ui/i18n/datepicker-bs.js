@@ -1,5 +1,4 @@
-/* Bosnian i18n for the jQuery UI date picker plugin. */
-/* Written by Kenan Konjo. */
+
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
 

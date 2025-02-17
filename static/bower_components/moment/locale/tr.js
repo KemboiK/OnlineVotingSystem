@@ -1,7 +1,5 @@
 //! moment.js locale configuration
 //! locale : Turkish [tr]
-//! authors : Erhan Gundogan : https://github.com/erhangundogan,
-//!           Burak Yiğit Kaya: https://github.com/BYK
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

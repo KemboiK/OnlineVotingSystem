@@ -1,5 +1,4 @@
-/* Algerian Arabic Translation for jQuery UI date picker plugin. (can be used for Tunisia)*/
-/* Mohamed Cherif BOUCHELAGHEM -- cherifbouchelaghem@yahoo.fr */
+
 
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {

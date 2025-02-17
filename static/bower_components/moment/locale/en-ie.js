@@ -1,6 +1,5 @@
 //! moment.js locale configuration
 //! locale : English (Ireland) [en-ie]
-//! author : Chris Cartlidge : https://github.com/chriscartlidge
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

@@ -1,7 +1,5 @@
 //! moment.js locale configuration
 //! locale : Urdu [ur]
-//! author : Sawood Alam : https://github.com/ibnesayeed
-//! author : Zack : https://github.com/ZackVision
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

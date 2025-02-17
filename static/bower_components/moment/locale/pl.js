@@ -1,6 +1,5 @@
 //! moment.js locale configuration
 //! locale : Polish [pl]
-//! author : Rafal Hirsz : https://github.com/evoL
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

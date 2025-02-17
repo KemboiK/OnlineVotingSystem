@@ -1,5 +1,4 @@
-/* Inicialització en català per a l'extensió 'UI date picker' per jQuery. */
-/* Writers: (joan.leon@gmail.com). */
+
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
 

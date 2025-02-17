@@ -1,7 +1,5 @@
 //! moment.js locale configuration
 //! locale : Tetun Dili (East Timor) [tet]
-//! author : Joshua Brooks : https://github.com/joshbrooks
-//! author : Onorio De J. Afonso : https://github.com/marobo
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

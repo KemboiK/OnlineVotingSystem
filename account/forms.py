@@ -1,6 +1,6 @@
 from django import forms
 from .models import *
-
+import re
 
 class FormSettings(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -12,7 +12,6 @@ class FormSettings(forms.ModelForm):
 
 class CustomUserForm(FormSettings):
     email = forms.EmailField(required=True)
-    # email = forms.EmailField(required=True)
     password = forms.CharField(widget=forms.PasswordInput)
 
     widget = {
@@ -32,30 +31,34 @@ class CustomUserForm(FormSettings):
             self.fields['first_name'].required = True
             self.fields['last_name'].required = True
 
-    def clean_email(self, *args, **kwargs):
+    def clean_email(self):
         formEmail = self.cleaned_data['email'].lower()
+
+        # JKUAT student email format enforcement
+        pattern = r"^[a-zA-Z0-9._%+-]+@students\.jkuat\.ac\.ke$"
+        if not re.match(pattern, formEmail):
+            raise forms.ValidationError("You must use a JKUAT student email (example@students.jkuat.ac.ke).")
+
+        # Check if email already exists in the database
         if self.instance.pk is None:  # Insert
             if CustomUser.objects.filter(email=formEmail).exists():
-                raise forms.ValidationError(
-                    "The given email is already registered")
+                raise forms.ValidationError("The given email is already registered")
         else:  # Update
-            dbEmail = self.Meta.model.objects.get(
-                id=self.instance.pk).email.lower()
-            if dbEmail != formEmail:  # There has been changes
+            dbEmail = self.Meta.model.objects.get(id=self.instance.pk).email.lower()
+            if dbEmail != formEmail:  # If the email has been changed
                 if CustomUser.objects.filter(email=formEmail).exists():
-                    raise forms.ValidationError(
-                        "The given email is already registered")
+                    raise forms.ValidationError("The given email is already registered")
+
         return formEmail
 
     def clean_password(self):
         password = self.cleaned_data.get("password", None)
         if self.instance.pk is not None:
             if not password:
-                # return None
-                return self.instance.password
+                return self.instance.password  # Keep existing password if not changed
 
         return make_password(password)
 
     class Meta:
         model = CustomUser
-        fields = ['last_name', 'first_name', 'email', 'password', ]
+        fields = ['last_name', 'first_name', 'email', 'password']

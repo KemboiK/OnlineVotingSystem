@@ -8,6 +8,11 @@ from django.http import JsonResponse, HttpResponse
 from django.conf import settings
 import json  # Not used
 from django_renderpdf.views import PDFView
+from django.contrib.auth.decorators import login_required, user_passes_test
+
+# Function to check if the user is an admin
+def is_admin(user):
+    return user.is_authenticated and user.is_superuser
 
 
 def find_n_winners(data, n):

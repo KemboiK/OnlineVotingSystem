@@ -60,14 +60,3 @@ grunt watch // run jsHint and Jasmine tests whenever a file is changed
 grunt compile // minify the js and css files
 ```
 
-- Please make it easy on me by covering any new features or issues 
-  with <a href="http://pivotal.github.com/jasmine">Jasmine</a> tests.
-- If your changes need documentation, please take the time to update the docs.
-
-Acknowledgements
-================
-
-Thanks to everyone who have given feedback and submitted pull requests. A 
-list of all the contributors can be found <a href="https://github.com/jdewit/bootstrap-timepicker/graphs/contributors">here</a>.
-
-Special thanks to @eternicode and his <a href="https://github.com/eternicode/bootstrap-datepicker">Twitter Datepicker</a> for inspiration.

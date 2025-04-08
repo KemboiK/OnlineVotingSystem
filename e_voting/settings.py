@@ -153,3 +153,12 @@ SEND_OTP = False  # If you toggle this to False, Kindly use 0000 as your OTP
 
 #Primary key to Auto Field 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email Backend
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#When going to production, just change EMAIL_BACKEND to 'django.core.mail.backends.smtp.EmailBackend'.
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your_email@gmail.com'
+EMAIL_HOST_PASSWORD = 'your_app_specific_password'  # Create from Google App Passwords

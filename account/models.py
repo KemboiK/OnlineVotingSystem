@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.hashers import make_password
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 # Create your models here.
 
@@ -45,3 +46,14 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.last_name + " " + self.first_name
+    
+class EmailOTP(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    otp = models.CharField(max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_expired(self):
+        return timezone.now() > self.created_at + timezone.timedelta(minutes=10)
+
+    def __str__(self):
+        return f"{self.user.email} - {self.otp}"  

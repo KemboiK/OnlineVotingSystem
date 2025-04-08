@@ -67,5 +67,7 @@ Admins can track vote counts and voter participation.
 #🤝 Contributors              
 KemboiK
 Benedict2002
+Staceyronoh
 MaithiaRobert
+elg33z
 Feel free to contribute via pull requests!

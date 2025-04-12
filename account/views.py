@@ -9,6 +9,7 @@ from .utils import send_otp_to_user
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+from django.views.decorators.http import require_POST
 
 # Create your views here.
 
@@ -83,14 +84,14 @@ def forgot_password(request):
             user = get_user_model().objects.get(email=email)
             send_otp_to_user(user)
             request.session['reset_email'] = email  # Store the email in session for later
-            return redirect('verify_otp')  # Redirect to OTP verification page
+            return redirect('verify_reset_otp')  # Redirect to OTP verification page
         except get_user_model().DoesNotExist:
             messages.error(request, 'Email not found.')  # Handle case where email doesn't exist
     
-    return render(request, 'account/forgot_password.html')  # Render the form for the forgot password page
+    return render(request, 'voting/forgot_password.html')  # Render the form for the forgot password page
 
 
-def verify_otp(request):
+def verify_reset_otp(request):
     if request.method == 'POST':
         otp_input = request.POST['otp']
         email = request.session.get('reset_email')
@@ -100,7 +101,7 @@ def verify_otp(request):
             return redirect('reset_password')
         else:
             messages.error(request, 'Invalid or expired OTP.')
-    return render(request, 'account/verify_otp.html')
+    return render(request, 'voting/verify_otp.html')
 
 
 def reset_password(request):
@@ -116,4 +117,22 @@ def reset_password(request):
             return redirect('account_login')
         else:
             messages.error(request, 'Passwords do not match.')
-    return render(request, 'account/reset_password.html')
+    return render(request, 'voting/reset_password.html')
+
+@require_POST
+def resend_reset_otp(request):
+    email = request.session.get('reset_email')
+
+    if not email:
+        messages.error(request, 'Session expired. Please start the reset process again.')
+        return redirect('forgot_password')
+
+    try:
+        user = get_user_model().objects.get(email=email)
+        send_otp_to_user(user)
+        request.session['reset_email'] = email  # Refresh session key
+        messages.success(request, 'A new OTP has been sent to your email.')
+    except get_user_model().DoesNotExist:
+        messages.error(request, 'User not found. Please try again.')
+
+    return redirect('verify_reset_otp')

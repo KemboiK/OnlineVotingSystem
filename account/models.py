@@ -4,6 +4,8 @@ from django.contrib.auth.hashers import make_password
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+from datetime import timedelta
+
 
 # Create your models here.
 
@@ -53,7 +55,7 @@ class EmailOTP(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def is_expired(self):
-        return timezone.now() > self.created_at + timezone.timedelta(minutes=10)
+        return timezone.now() < self.created_at + timezone.timedelta(minutes=10)
 
     def __str__(self):
         return f"{self.user.email} - {self.otp}"  

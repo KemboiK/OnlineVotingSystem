@@ -1,13 +1,28 @@
 from django.shortcuts import render, redirect, reverse
-from account.views import account_login
+from account.views import  account_login, verify_reset_otp, resend_reset_otp
 from .models import Position, Candidate, Voter, Votes
 from django.http import JsonResponse
 from django.utils.text import slugify
+from account.utils import send_otp_to_user
 from django.contrib import messages
+from django.contrib.auth import login
 from django.conf import settings
 from django.http import JsonResponse
-import requests
+from django.utils import timezone
+from datetime import timedelta
+import requests, logging
 import json
+from django.core.mail import send_mail
+from django.views.decorators.http import require_POST
+from account.utils import send_otp_to_user, send_mail
+from django.utils import timezone
+from django.contrib.auth import get_user_model
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from account.models import EmailOTP
+
+
+
 # Create your views here.
 
 
@@ -88,15 +103,6 @@ def fetch_ballot(request):
     return JsonResponse(output, safe=False)
 
 
-def generate_otp():
-    """Link to this function
-    https://www.codespeedy.com/otp-generation-using-random-module-in-python/
-    """
-    import random as r
-    otp = ""
-    for i in range(r.randint(5, 8)):
-        otp += str(r.randint(1, 9))
-    return otp
 
 
 def dashboard(request):
@@ -120,7 +126,6 @@ def dashboard(request):
         else:
             return redirect(reverse('show_ballot'))
 
-
 def verify(request):
     context = {
         'page_title': 'OTP Verification'
@@ -128,53 +133,36 @@ def verify(request):
     return render(request, "voting/voter/verify.html", context)
 
 
+@require_POST
 def resend_otp(request):
-    """API For SMS
-    I used https://www.multitexter.com/ API to send SMS
-    You might not want to use this or this service might not be available in your Country
-    For quick and easy access, Toggle the SEND_OTP from True to False in settings.py
-    """
-    user = request.user
-    voter = user.voter
     error = False
-    if settings.SEND_OTP:
-        if voter.otp_sent >= 3:
-            error = True
-            response = "You have requested OTP three times. You cannot do this again! Please enter previously sent OTP"
-        else:
-            phone = voter.phone
-            # Now, check if an OTP has been generated previously for this voter
-            otp = voter.otp
-            if otp is None:
-                # Generate new OTP
-                otp = generate_otp()
-                voter.otp = otp
+    email = request.user.email  # <--- Notice this line uses logged-in user directly
+
+    try:
+        user = get_user_model().objects.get(email=email)
+        voter = user.voter
+
+        if settings.SEND_OTP:
+            if voter.otp_sent >= 100:
+                error = True
+                response = "You have requested OTP too many times. Use the last sent OTP."
+            else:
+                print("Generating new OTP...")
+                send_otp_to_user(user, mode='voting')
+                voter.otp_sent += 1
                 voter.save()
-            try:
-                msg = "Dear " + str(user) + ", kindly use " + \
-                    str(otp) + " as your OTP"
-                message_is_sent = send_sms(phone, msg)
-                if message_is_sent:  # * OTP was sent successfully
-                    # Update how many OTP has been sent to this voter
-                    # Limited to Three so voters don't exhaust OTP balance
-                    voter.otp_sent = voter.otp_sent + 1
-                    voter.save()
+                response = "OTP has been sent to your email. Please check your inbox or spam folder."
+        else:
+            response = "OTP feature is disabled."
 
-                    response = "OTP has been sent to your phone number. Please provide it in the box provided below"
-                else:
-                    error = True
-                    response = "OTP not sent. Please try again"
-            except Exception as e:
-                response = "OTP could not be sent." + str(e)
+    except get_user_model().DoesNotExist:
+        error = True
+        response = "User not found."
+    except Voter.DoesNotExist:
+        error = True
+        response = "Voter record not found."
 
-                # * Send OTP
-    else:
-        #! Update all Voters record and set OTP to 0000
-        #! Bypass OTP verification by updating verified to 1
-        #! Redirect voters to ballot page
-        response = bypass_otp()
     return JsonResponse({"data": response, "error": error})
-
 
 def bypass_otp():
     Voter.objects.all().filter(otp=None, verified=False).update(otp="0000", verified=True)
@@ -182,55 +170,31 @@ def bypass_otp():
     return response
 
 
-def send_sms(phone_number, msg):
-    """Read More
-    https://www.multitexter.com/developers
-    """
-    import requests
-    import os
-    import json
-    response = ""
-    email = os.environ.get('SMS_EMAIL')
-    password = os.environ.get('SMS_PASSWORD')
-    if email is None or password is None:
-        raise Exception("Email/Password cannot be Null")
-    url = "https://app.multitexter.com/v2/app/sms"
-    data = {"email": email, "password": password, "message": msg,
-            "sender_name": "OTP", "recipients": phone_number, "forcednd": 1}
-    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-    r = requests.post(url, data=json.dumps(data), headers=headers)
-    response = r.json()
-    status = response.get('status', 0)
-    if str(status) == '1':
-        return True
-    else:
-        return False
+def verify_voting_otp(request):
+    otp_input = request.POST.get('otp', '').strip()
+    user = request.user  # Use the currently authenticated user
 
+    try:
+        voter = user.voter
 
-def verify_otp(request):
-    error = True
-    if request.method != 'POST':
-        messages.error(request, "Access Denied")
-    else:
-        otp = request.POST.get('otp')
-        if otp is None:
-            messages.error(request, "Please provide valid OTP")
+        print("Entered OTP:", otp_input)
+        print("Stored OTP:", voter.otp)
+
+        if voter.otp == otp_input:
+            voter.verified = True
+            voter.save()
+            login(request, user)  # Re-login for safety, though user should already be logged in
+            return redirect('voterDashboard')
         else:
-            # Get User OTP
-            voter = request.user.voter
-            db_otp = voter.otp
-            if db_otp != otp:
-                messages.error(request, "Provided OTP is not valid")
-            else:
-                messages.success(
-                    request, "You are now verified. Please cast your vote")
-                voter.verified = True
-                voter.save()
-                error = False
-    if error:
-        return redirect(reverse('voterVerify'))
-    return redirect(reverse('show_ballot'))
+            messages.error(request, 'Invalid OTP.')
+            return redirect('voterVerify')
 
+    except Voter.DoesNotExist:
+        messages.error(request, 'Voter record not found.')
+    except Exception as e:
+        messages.error(request, 'An unexpected error occurred.')
+
+    return redirect('voterVerify')  # Fallback redirect
 
 def show_ballot(request):
     if request.user.voter.voted:

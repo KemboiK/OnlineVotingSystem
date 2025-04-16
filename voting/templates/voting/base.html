@@ -117,6 +117,18 @@
     </script>
     {% endfor %}
     {% endif %}
+
+    <script type="text/javascript">
+      // Listen for the F5 key press
+      document.addEventListener('keydown', function(event) {
+        // Check if the pressed key is F5
+        if (event.key === "F5") {
+          event.preventDefault(); // Prevent the default F5 behavior (refreshing the page)
+          window.location.href = "/help/"; // Redirect to the help page
+        }
+      });
+    </script>
+    
 </body>
 
 

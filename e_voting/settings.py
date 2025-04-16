@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'voting.apps.VotingConfig',
     'administrator.apps.AdministratorConfig',
+    'helpworkshop',
 ]
 
 MIDDLEWARE = [

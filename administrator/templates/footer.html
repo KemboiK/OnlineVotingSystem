@@ -1,7 +1,13 @@
-<footer class="main-footer">
+<footer class="main-footer clearfix">
+  <div class="pull-left">
+      <a href="{% url 'help_home' %}" class="btn btn-sm btn-info">
+          <i class="fa fa-question-circle"></i> Help
+      </a>
+  </div>
   <div class="pull-right hidden-xs">
       Developed by Jkuat MCS Students
   </div>
-  <strong> &copy; {% now "Y" %} -  Online Voting System</a></strong>
-
+  <div class="text-center">
+      <strong>&copy; {% now "Y" %} - Online Voting System</strong>
+  </div>
 </footer>

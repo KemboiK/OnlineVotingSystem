@@ -33,6 +33,9 @@ class AccountCheckMiddleWare(MiddlewareMixin):
                 reverse('verify_reset_otp'),
                 reverse('reset_password'),
                 reverse('resend_reset_otp'),
+                reverse('help_home'),
+                reverse('faq'),
+                reverse('contact_support'),
             ]
             # If the path is login or has anything to do with authentication, pass
             if request.path in allowed_paths or modulename == 'django.contrib.auth.views':

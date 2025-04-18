@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 from pathlib import Path
-import dj_database_url
 import os
 from decouple import config
 
@@ -97,13 +96,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-# Override with Heroku's PostgreSQL database configuration if on Heroku
-if 'DATABASE_URL' in os.environ:  # Check if we are on Heroku
-    DATABASES['default'] = dj_database_url.config(
-        default=config('DATABASE_URL'),
-        conn_max_age=600, 
-        ssl_require=True
-    )
+
 
     # 'default': {
     #     'ENGINE': 'django.db.backends.mysql',
@@ -186,7 +179,7 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')  # Create from Google App Passwords
 
 SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
 
 CSRF_TRUSTED_ORIGINS = [
     'https://e-voting-jkuat-9feb3d297189.herokuapp.com',

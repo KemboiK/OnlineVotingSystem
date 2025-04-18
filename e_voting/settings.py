@@ -94,7 +94,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-
+}
 # Override with Heroku's PostgreSQL database configuration if on Heroku
 if 'DATABASE_URL' in os.environ:
     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
@@ -107,7 +107,7 @@ if 'DATABASE_URL' in os.environ:
     #     'USER': 'root',
     #     'PASSWORD': ''
     # }
-}
+
 
 
 # Password validation

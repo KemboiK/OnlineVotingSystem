@@ -29,6 +29,7 @@ DEBUG = config('DEBUG', cast=bool)  # Fetch from .env
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=lambda v: [s.strip() for s in v.split(",")])
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -178,9 +179,9 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')  # Create from Google App Passwords
 
-#SESSION_COOKIE_SECURE = True
-#CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
-#CSRF_TRUSTED_ORIGINS = [
-#    'https://e-voting-jkuat-9feb3d297189.herokuapp.com','localhost','127.0.0.1'
-#]
+CSRF_TRUSTED_ORIGINS = [
+    'https://e-voting-jkuat-9feb3d297189.herokuapp.com',
+]

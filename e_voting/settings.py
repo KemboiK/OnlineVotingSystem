@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import dj_database_url
 import os
+from decouple import config
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,13 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '%6lp_p!%r$7t-2ql5hc5(r@)8u_fc+6@ugxcnz=h=b(fn#3$p9'
+SECRET_KEY = config('SECRET_KEY')  # Fetch from .env file
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)  # Fetch from .env
 
-ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
 
 # Application definition
 
@@ -96,9 +98,12 @@ DATABASES = {
     }
 }
 # Override with Heroku's PostgreSQL database configuration if on Heroku
-if 'DATABASE_URL' in os.environ:
-    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
-
+if 'DATABASE_URL' in os.environ:  # Check if we are on Heroku
+    DATABASES['default'] = dj_database_url.config(
+        default=config('DATABASE_URL'),
+        conn_max_age=600, 
+        ssl_require=True
+    )
 
     # 'default': {
     #     'ENGINE': 'django.db.backends.mysql',

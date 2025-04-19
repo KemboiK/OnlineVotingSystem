@@ -12,22 +12,18 @@ class VoterForm(forms.ModelForm):
 
     def clean_phone(self):
         phone = self.cleaned_data.get('phone')
+        
+        # Remove spaces and hyphens if any
+        phone = re.sub(r"[\s\-]", "", phone)
 
-        # Remove any spaces
-        phone = phone.replace(" ", "")
-
-        # Rule 1: +254 format
         if phone.startswith('+254'):
             if not re.fullmatch(r'\+2547\d{8}', phone):
-                raise forms.ValidationError("Phone must start with +254 ")
-        
-        # Rule 2: 07 format
+                raise forms.ValidationError("Phone must start with +2547 followed by 8 digits (e.g., +254712345678).")
         elif phone.startswith('07'):
             if not re.fullmatch(r'07\d{8}', phone):
-                raise forms.ValidationError("Phone must start with 07 and be exactly 10 digits long")
-
+                raise forms.ValidationError("Phone must start with 07 followed by 8 digits (e.g., 0712345678).")
         else:
-            raise forms.ValidationError("Phone number must start with +254 or 07")
+            raise forms.ValidationError("Phone must start with +254 or 07.")
 
         return phone
 

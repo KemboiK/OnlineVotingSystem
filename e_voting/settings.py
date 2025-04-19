@@ -183,9 +183,6 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')  # Create from Google App Pa
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-
-
-
 CSRF_TRUSTED_ORIGINS = [
     'https://e-voting-jkuat-9feb3d297189.herokuapp.com',
 ]

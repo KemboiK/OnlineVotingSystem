@@ -66,7 +66,7 @@ ROOT_URLCONF = 'e_voting.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['voting/templates', 'administrator/templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), 'voting/templates', 'administrator/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

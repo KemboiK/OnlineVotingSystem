@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from . import settings
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', include('account.urls')),
@@ -25,5 +26,6 @@ urlpatterns = [
     path('administrator/', include('administrator.urls')),
     path('voting/', include('voting.urls')),
     path('help/', include('helpworkshop.urls')),
+    path('google1234567890abcdef.html', TemplateView.as_view(template_name='google1234567890abcdef.html', content_type='text/html')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

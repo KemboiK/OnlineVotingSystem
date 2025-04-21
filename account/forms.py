@@ -1,6 +1,8 @@
 from django import forms
 from .models import *
 import re
+from django.core.exceptions import ValidationError
+from django.contrib.auth.hashers import make_password
 
 class FormSettings(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -53,11 +55,26 @@ class CustomUserForm(FormSettings):
 
     def clean_password(self):
         password = self.cleaned_data.get("password", None)
+        
         if self.instance.pk is not None:
             if not password:
                 return self.instance.password  # Keep existing password if not changed
 
-        return make_password(password)
+        if password:
+            # Password validation: at least 8 characters, one uppercase, one digit, and one special character
+            if len(password) < 8:
+                raise ValidationError("Password must be at least 8 characters long.")
+            if not re.search(r'[A-Z]', password):
+                raise ValidationError("Password must contain at least one uppercase letter.")
+            if not re.search(r'[0-9]', password):
+                raise ValidationError("Password must contain at least one digit.")
+            if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+                raise ValidationError("Password must contain at least one special character.")
+
+            # Hash the password if it's valid
+            return make_password(password)
+        else:
+            raise ValidationError("Password is required")
 
     class Meta:
         model = CustomUser

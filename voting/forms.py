@@ -5,6 +5,10 @@ from django.core.exceptions import ValidationError
 import re
 
 
+import re
+from django import forms
+from .models import Voter
+
 class VoterForm(forms.ModelForm):
     class Meta:
         model = Voter
@@ -13,19 +17,19 @@ class VoterForm(forms.ModelForm):
     def clean_phone(self):
         phone = self.cleaned_data.get('phone')
         
-        # Remove spaces and hyphens if any
+        # Remove spaces and hyphens
         phone = re.sub(r"[\s\-]", "", phone)
 
-        if phone.startswith('+254'):
-            if not re.fullmatch(r'\+2547\d{8}', phone):
-                raise forms.ValidationError("Phone must start with +2547 followed by 8 digits (e.g., +254712345678).")
-        elif phone.startswith('07'):
-            if not re.fullmatch(r'07\d{8}', phone):
-                raise forms.ValidationError("Phone must start with 07 followed by 8 digits (e.g., 0712345678).")
-        else:
-            raise forms.ValidationError("Phone must start with +254 or 07.")
+        # Kenyan mobile number patterns
+        local_pattern = r'^(07|01)\d{8}$'
+        intl_pattern = r'^\+254(7|1)\d{8}$'
 
-        return phone
+        if re.fullmatch(local_pattern, phone) or re.fullmatch(intl_pattern, phone):
+            return phone
+        else:
+            raise forms.ValidationError(
+                "Phone must start with 07 or 01 (e.g., 0712345678 or 0112345678) or +2547/+2541 followed by 8 digits (e.g., +254712345678 or +254112345678)."
+            )
 
 class PositionForm(FormSettings):
     class Meta:

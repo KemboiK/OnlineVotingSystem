@@ -18,7 +18,7 @@ def send_otp_to_user(user, mode='password_reset'):
     message = (
         f"Hello {name},\n\n"
         f"Your OTP code is: {otp}\n"
-        f"It will expire in 10 minutes.\n\n"
+        f"It will expire in 3 minutes.\n\n"
         "If you did not request this, please ignore this email."
     )
 
@@ -31,7 +31,7 @@ def send_otp_to_user(user, mode='password_reset'):
         try:
             voter = user.voter  # use reverse relation to avoid mismatch
             voter.otp = str(otp)
-            voter.otp_expiry = timezone.now() + timedelta(minutes=10)
+            voter.otp_expiry = timezone.now() + timedelta(minutes=3)
             voter.save()
             print(f"[DEBUG] Voting OTP {otp} saved for voter: {voter} (user: {user.email})")
         except Voter.DoesNotExist:

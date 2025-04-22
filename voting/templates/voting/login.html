@@ -20,11 +20,12 @@
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
 
-                <!-- reCAPTCHA Widget -->
+                <!-- Add reCAPTCHA field (borrowed from register form) -->
                 <div class="form-group">
-                    <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_PUBLIC_KEY }}"></div>
-                </div>     
-                           
+                    <span class="text-danger">{{ form.captcha.errors }}</span>
+                    {{ form.captcha }}
+                </div>    
+
                 <div class="row">
                     <div class="col-xs-4">
                         <button type="submit" class="btn btn-success btn-block btn-flat" name="login"><i

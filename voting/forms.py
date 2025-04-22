@@ -4,11 +4,6 @@ from account.forms import FormSettings
 from django.core.exceptions import ValidationError
 import re
 
-
-import re
-from django import forms
-from .models import Voter
-
 class VoterForm(forms.ModelForm):
     class Meta:
         model = Voter
@@ -28,7 +23,7 @@ class VoterForm(forms.ModelForm):
             return phone
         else:
             raise forms.ValidationError(
-                "Phone must start with 07 or 01 (e.g., 0712345678 or 0112345678) or +2547/+2541 followed by 8 digits (e.g., +254712345678 or +254112345678)."
+                "Phone must start with 07 or 01 or +2547/+2541 followed by 8 digits."
             )
 
 class PositionForm(FormSettings):

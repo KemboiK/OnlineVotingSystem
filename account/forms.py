@@ -3,6 +3,9 @@ from .models import *
 import re
 from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import make_password
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
+
 
 class FormSettings(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -15,10 +18,13 @@ class FormSettings(forms.ModelForm):
 class CustomUserForm(FormSettings):
     email = forms.EmailField(required=True)
     password = forms.CharField(widget=forms.PasswordInput)
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())  # <-- Add this line
 
     widget = {
         'password': forms.PasswordInput(),
     }
+
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
 
     def __init__(self, *args, **kwargs):
         super(CustomUserForm, self).__init__(*args, **kwargs)

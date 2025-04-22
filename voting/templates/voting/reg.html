@@ -29,8 +29,12 @@
                     </div>
                     {% endfor %}
 
-
-               
+                    <!-- Add reCAPTCHA field -->
+                    <div class="form-group">
+                        <span class="text-danger">{{ form.captcha.errors }}</span>
+                        {{ form.captcha }}
+                    </div>
+            
 
                     <div class="row">
                         <div class="col-xs-6">

@@ -15,17 +15,27 @@ class FormSettings(forms.ModelForm):
             field.field.widget.attrs['class'] = 'form-control'
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(widget=forms.EmailInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'Email',
-        'required': True
-    }))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'Password',
-        'required': True
-    }))
-    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Email',
+            'required': True  # Optional, handled at HTML level
+        })
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Password',
+            'required': True  # Optional, handled at HTML level
+        })
+    )
+    captcha = ReCaptchaField(
+        widget=ReCaptchaV2Checkbox,
+        error_messages={
+            'required': 'Please verify that you are not a robot.',
+            'invalid_input_response': 'Invalid reCAPTCHA. Please try again.'
+        }
+    )
 
 class CustomUserForm(FormSettings):
     email = forms.EmailField(required=True)

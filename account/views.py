@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from .email_backend import EmailBackend
 from django.contrib import messages
-from .forms import CustomUserForm
+from .forms import CustomUserForm, LoginForm
 from voting.forms import VoterForm
 from django.contrib.auth import login, logout
 from .models import EmailOTP
@@ -13,7 +13,6 @@ from django.views.decorators.http import require_POST
 
 # Create your views here.
 
-
 def account_login(request):
     if request.user.is_authenticated:
         if request.user.user_type == '1':
@@ -21,21 +20,26 @@ def account_login(request):
         else:
             return redirect(reverse("voterDashboard"))
 
-    context = {}
-    if request.method == 'POST':
-        user = EmailBackend.authenticate(request, username=request.POST.get(
-            'email'), password=request.POST.get('password'))
-        if user != None:
-            login(request, user)
-            if user.user_type == '1':
-                return redirect(reverse("adminDashboard"))
-            else:
-                return redirect(reverse("voterDashboard"))
-        else:
-            messages.error(request, "Invalid details")
-            return redirect("/")
+    form = LoginForm(request.POST or None)
 
-    return render(request, "voting/login.html", context)
+    if request.method == 'POST':
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+
+            user = EmailBackend.authenticate(request, username=email, password=password)
+            if user is not None:
+                login(request, user)
+                if user.user_type == '1':
+                    return redirect(reverse("adminDashboard"))
+                else:
+                    return redirect(reverse("voterDashboard"))
+            else:
+                messages.error(request, "Invalid email or password.")
+        else:
+            messages.error(request, "Please complete the form correctly.")
+
+    return render(request, 'voting/login.html', {'form': form})
 
 
 def account_register(request):

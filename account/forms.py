@@ -14,6 +14,18 @@ class FormSettings(forms.ModelForm):
         for field in self.visible_fields():
             field.field.widget.attrs['class'] = 'form-control'
 
+class LoginForm(forms.Form):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Email',
+        'required': True
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Password',
+        'required': True
+    }))
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
 
 class CustomUserForm(FormSettings):
     email = forms.EmailField(required=True)

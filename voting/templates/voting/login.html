@@ -19,6 +19,12 @@
                     <input type="password" class="form-control" name="password" placeholder="Password" required>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
+
+                <!-- reCAPTCHA Widget -->
+                <div class="form-group">
+                    <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_PUBLIC_KEY }}"></div>
+                </div>     
+                           
                 <div class="row">
                     <div class="col-xs-4">
                         <button type="submit" class="btn btn-success btn-block btn-flat" name="login"><i

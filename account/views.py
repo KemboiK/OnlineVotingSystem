@@ -10,6 +10,8 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.views.decorators.http import require_POST
+import requests
+from django.conf import settings
 
 # Create your views here.
 
@@ -23,19 +25,38 @@ def account_login(request):
 
     context = {}
     if request.method == 'POST':
-        user = EmailBackend.authenticate(request, username=request.POST.get(
-            'email'), password=request.POST.get('password'))
-        if user != None:
-            login(request, user)
-            if user.user_type == '1':
-                return redirect(reverse("adminDashboard"))
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        captcha_response = request.POST.get('g-recaptcha-response')  # Get CAPTCHA response
+
+        # Verify reCAPTCHA
+        captcha_url = "https://www.google.com/recaptcha/api/siteverify"
+        captcha_secret = settings.RECAPTCHA_PRIVATE_KEY  # Private key from your environment variable
+        data = {
+            'secret': captcha_secret,
+            'response': captcha_response
+        }
+        captcha_verification = requests.post(captcha_url, data=data)
+        result = captcha_verification.json()
+
+        if result.get("success"):  # If CAPTCHA is verified
+            # Proceed with user authentication
+            user = EmailBackend.authenticate(request, username=email, password=password)
+            if user is not None:
+                login(request, user)
+                if user.user_type == '1':
+                    return redirect(reverse("adminDashboard"))
+                else:
+                    return redirect(reverse("voterDashboard"))
             else:
-                return redirect(reverse("voterDashboard"))
+                messages.error(request, "Invalid details")
+                return redirect("account_login")
         else:
-            messages.error(request, "Invalid details")
-            return redirect("/")
+            messages.error(request, "Please complete the CAPTCHA.")
+            return redirect("account_login")
 
     return render(request, "voting/login.html", context)
+
 
 
 def account_register(request):

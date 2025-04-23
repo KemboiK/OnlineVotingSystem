@@ -398,22 +398,6 @@ def resetVote(request):
     messages.success(request, "All votes has been reset")
     return redirect(reverse('viewVotes'))
 
-
-@login_required
-@user_passes_test(is_admin)
-def admin_view_votes(request):
-    if not request.session.get('admin_verified'):
-        return redirect('confirm_admin_password')
-
-    # Optional: Clear the verification after viewing once
-    request.session.pop('admin_verified', None)
-
-    # Fetch the votes (adjust according to your model)
-    votes = Votes.objects.all()
-
-    return render(request, 'admin/admin_votes.html', {'votes': votes})
-
-
 @login_required
 @user_passes_test(is_admin)
 def confirm_admin_password(request):
@@ -424,7 +408,7 @@ def confirm_admin_password(request):
             user = authenticate(request, username=request.user.username, password=password)
             if user:
                 request.session['admin_verified'] = True
-                return redirect('admin_view_votes')  # or whatever your votes view is called
+                return redirect('viewVotes')  # or whatever your votes view is called
             else:
                 messages.error(request, 'Incorrect password.')
     else:

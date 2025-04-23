@@ -411,12 +411,15 @@ def confirm_admin_password(request):
         form = AdminPasswordConfirmationForm(request.POST)
         if form.is_valid():
             password = form.cleaned_data['password']
-            user = authenticate(request, username=request.user.email, password=password)
-            if user:
+            
+            # Direct password check 
+            if request.user.check_password(password):
                 request.session['admin_verified'] = True
-                return redirect('viewVotes') 
+                return redirect('viewVotes')
             else:
                 messages.error(request, 'Incorrect password.')
     else:
         form = AdminPasswordConfirmationForm()
+        
     return render(request, 'admin/confirm_password.html', {'form': form})
+

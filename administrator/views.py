@@ -10,9 +10,6 @@ import json  # Not used
 from django_renderpdf.views import PDFView
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.shortcuts import render, redirect
-from voting.models import Votes 
 
 # Function to check if the user is an admin
 def is_admin(user):
@@ -424,7 +421,7 @@ def confirm_admin_password(request):
         form = AdminPasswordConfirmationForm(request.POST)
         if form.is_valid():
             password = form.cleaned_data['password']
-            user = authenticate(request, username=request.user.email, password=password)
+            user = authenticate(request, username=request.user.username, password=password)
             if user:
                 request.session['admin_verified'] = True
                 return redirect('admin_view_votes')  # or whatever your votes view is called

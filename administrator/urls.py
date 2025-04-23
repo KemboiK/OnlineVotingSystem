@@ -33,7 +33,7 @@ urlpatterns = [
     path('votes/reset/', views.resetVote, name='resetVote'),
     path('votes/print/', views.PrintView.as_view(), name='printResult'),
 
-
+    path('admin/confirm-password/', views.confirm_admin_password, name='confirm_admin_password'),
 
 
 ]

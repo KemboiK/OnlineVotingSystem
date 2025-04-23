@@ -29,7 +29,7 @@ urlpatterns = [
          views.update_ballot_position, name='update_ballot_position'),
 
     # * Votes
-    path('votes/view', views.viewVotes, name='viewVotes'),
+    path('votes/view', views.admin_view_votes, name='viewVotes'),
     path('votes/reset/', views.resetVote, name='resetVote'),
     path('votes/print/', views.PrintView.as_view(), name='printResult'),
 

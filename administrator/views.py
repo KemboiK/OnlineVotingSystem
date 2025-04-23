@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
-from .models import Votes 
+from voting.models import Votes 
 
 # Function to check if the user is an admin
 def is_admin(user):

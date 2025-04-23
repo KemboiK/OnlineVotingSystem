@@ -414,7 +414,7 @@ def admin_view_votes(request):
     # Fetch the votes (adjust according to your model)
     votes = Votes.objects.all()
 
-    return render(request, 'voting/admin_votes.html', {'votes': votes})
+    return render(request, 'admin/admin_votes.html', {'votes': votes})
 
 
 def is_admin(user):
@@ -435,4 +435,4 @@ def confirm_admin_password(request):
                 messages.error(request, 'Incorrect password.')
     else:
         form = AdminPasswordConfirmationForm()
-    return render(request, 'voting/confirm_password.html', {'form': form})
+    return render(request, 'admin/confirm_password.html', {'form': form})

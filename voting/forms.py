@@ -36,3 +36,10 @@ class CandidateForm(FormSettings):
     class Meta:
         model = Candidate
         fields = ['fullname', 'bio', 'position', 'photo']
+
+class AdminPasswordConfirmationForm(forms.Form):
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Enter your password'}),
+        label="Confirm Password"
+    )
+

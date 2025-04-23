@@ -411,7 +411,7 @@ def confirm_admin_password(request):
         form = AdminPasswordConfirmationForm(request.POST)
         if form.is_valid():
             password = form.cleaned_data['password']
-            user = authenticate(request, email=request.user.email, password=password)
+            user = authenticate(request, username=request.user.email, password=password)
             if user:
                 request.session['admin_verified'] = True
                 return redirect('viewVotes') 

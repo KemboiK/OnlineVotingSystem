@@ -383,7 +383,13 @@ def ballot_title(request):
         return redirect("/")
 
 
+@login_required
+@user_passes_test(is_admin)
 def viewVotes(request):
+    if not request.session.get('admin_verified', False):
+        messages.error(request, 'You need to verify your password first.')
+        return redirect('confirm_admin_password')  # Redirect to the confirm password page
+
     votes = Votes.objects.all()
     context = {
         'votes': votes,

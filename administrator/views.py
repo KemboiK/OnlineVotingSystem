@@ -417,9 +417,6 @@ def admin_view_votes(request):
     return render(request, 'admin/admin_votes.html', {'votes': votes})
 
 
-def is_admin(user):
-    return user.is_authenticated and user.user_type == '1'
-
 @login_required
 @user_passes_test(is_admin)
 def confirm_admin_password(request):

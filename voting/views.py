@@ -6,7 +6,7 @@ from django.utils.text import slugify
 from account.utils import send_otp_to_user
 from django.contrib import messages
 from django.contrib.auth import login
-from django.conf import setting
+from django.conf import settings
 from django.utils import timezone
 from datetime import timedelta
 import requests, logging

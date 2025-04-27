@@ -2,8 +2,6 @@ from django.db import models
 from account.models import CustomUser
 from django.utils import timezone
 
-# Create your models here.
-
 
 class Voter(models.Model):
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)

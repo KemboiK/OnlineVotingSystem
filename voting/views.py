@@ -6,8 +6,7 @@ from django.utils.text import slugify
 from account.utils import send_otp_to_user
 from django.contrib import messages
 from django.contrib.auth import login
-from django.conf import settings
-from django.http import JsonResponse
+from django.conf import setting
 from django.utils import timezone
 from datetime import timedelta
 import requests, logging
@@ -17,8 +16,6 @@ from django.views.decorators.http import require_POST
 from account.utils import send_otp_to_user, send_mail
 from django.utils import timezone
 from django.contrib.auth import get_user_model
-from django.shortcuts import render, redirect
-from django.contrib import messages
 from account.models import EmailOTP
 
 

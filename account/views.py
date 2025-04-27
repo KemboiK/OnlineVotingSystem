@@ -3,7 +3,7 @@ from .email_backend import EmailBackend
 from django.contrib import messages
 from .forms import CustomUserForm, LoginForm
 from voting.forms import VoterForm
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, get_user_model
 from .models import EmailOTP
 from .utils import send_otp_to_user
 from django.contrib.auth.hashers import make_password
@@ -80,7 +80,7 @@ def account_logout(request):
 def forgot_password(request):
     if request.user.is_authenticated:
         # Redirect to the user dashboard if they are already logged in
-        return redirect('voterDashboard')  # or 'adminDashboard' depending on their role
+        return redirect('voterDashboard')  
 
     if request.method == 'POST':
         email = request.POST['email']
@@ -95,10 +95,7 @@ def forgot_password(request):
     return render(request, 'voting/forgot_password.html')  # Render the form for the forgot password page
 
 
-from django.contrib.auth import get_user_model
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .models import EmailOTP
+
 
 def verify_reset_otp(request):
     if request.method == 'POST':

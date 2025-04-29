@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, reverse
 from account.views import  account_login, verify_reset_otp, resend_reset_otp
-from .models import Position, Candidate, Voter, Votes
+from .models import Position, Candidate, Voter, Votes 
 from django.http import JsonResponse
 from django.utils.text import slugify
-from account.utils import send_otp_to_user
+from account.utils import send_otp_to_user, send_mail
 from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login, get_user_model
 from django.conf import settings
 from django.utils import timezone
 from datetime import timedelta
@@ -13,12 +13,7 @@ import requests, logging
 import json
 from django.core.mail import send_mail
 from django.views.decorators.http import require_POST
-from account.utils import send_otp_to_user, send_mail
-from django.utils import timezone
-from django.contrib.auth import get_user_model
 from account.models import EmailOTP
-
-
 
 
 # Create your views here.
@@ -134,7 +129,7 @@ def verify(request):
 @require_POST
 def resend_otp(request):
     error = False
-    email = request.user.email  # <--- Notice this line uses logged-in user directly
+    email = request.user.email  # <--- this line uses logged-in user directly
 
     try:
         user = get_user_model().objects.get(email=email)

@@ -48,7 +48,7 @@ def generate_ballot(display_controls=False):
                 input_box = '<input value="'+str(candidate.id)+'" type="radio" class="flat-red ' + \
                     position_name+'" name="'+position_name+'">'
             image = "/media/" + str(candidate.photo)
-            candidates_data = candidates_data + '<li>' + input_box + '<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-fullname="'+candidate.fullname+'" data-bio="'+candidate.bio+'"><i class="fa fa-search"></i>Platform</button><img src="' + \
+            candidates_data = candidates_data + '<li>' + input_box + '<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-fullname="'+candidate.fullname+'" data-bio="'+candidate.bio+'"><i class="fa fa-search"></i> Candidate Info</button><img src="' + \
                 image+'" height="100px" width="100px" class="clist"><span class="cname clist">' + \
                 candidate.fullname+'</span></li>'
         up = ''
